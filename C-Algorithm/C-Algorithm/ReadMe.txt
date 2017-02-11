@@ -1,8 +1,8 @@
-## C-Algorithm 
-	###This is the main application source file.
+C-Algorithm 
+	This is the main application source file.
 	
-###function **__Main__** this is the main fucntion, function receives graph values as a _parametr_. Then function calls to Dijkstra function.
+		function Main this is the main fucntion, function receives graph values as a _parametr_. Then function calls to Dijkstra function.
 
-###function **__Dijkstra__** puts the maximum values in array of marks, and then in all nodes function check the shortest way to another node.
+		function Dijkstra puts the maximum values in array of marks, and then in all nodes function check the shortest way to another node.
 
-###fucntion **__MinDistance__** checks the shortest way by marks in other nodes in array.
+		fucntion MinDistance checks the shortest way by marks in other nodes in array.
