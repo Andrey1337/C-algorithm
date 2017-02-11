@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <limits.h>
+#include <string.h>
 
 #define COLS 3 
 #define ROWS 3 
@@ -52,39 +53,78 @@ void Dijkstra(int graph[ROWS][COLS])
 		}
 	}
 	dist[0][0] = 0;
-
-	for (int k = 0; k < 2; k++)
+	for (int k = 0; k < ROWS * COLS; k++)
 	{
 		for (int i = 0; i < ROWS; i++)
 		{
 			for (int j = 0; j < COLS; j++)
 			{
 				MinDistance(dist, i, j, graph[i][j]);
-				printf("GRAPH->%d ", graph[i][j]);
-				printf("{%d,%d} %d\n", i, j, dist[i][j]);
 			}
 		}
-		printf("-------------\n");
 	}
 
-
+	printf("Last node: %d\n", dist[ROWS - 1][COLS - 1]);
 }
 
-int main()
+
+int main(int argc, char *argv[])
 {
-	int graph[ROWS][COLS];
-	graph[0][0] = 0;
-	graph[0][1] = 13;
-	graph[0][2] = 5;
+	if (argc == 2)
+	{
+		char const* const _graphFile = argv[1];
 
-	graph[1][0] = 4;
-	graph[1][1] = 5;
-	graph[1][2] = 2;
+		FILE* graphFile = fopen(_graphFile, "r");
 
-	graph[2][0] = 1;
-	graph[2][1] = 6;
-	graph[2][2] = 9;
+		char number[10];
+		int inumber = 0;
 
-	Dijkstra(graph);
+		int i = 0;
+		int j = 0;
+
+		memset(number, '\0', sizeof(number));
+		int graph[ROWS][COLS];
+		int c;
+		while (EOF != (c = getc(graphFile)))
+		{
+			if (c != ' ')
+			{
+				while (EOF != c && c != ',')
+				{
+					strcat(number, &c);
+					c = getc(graphFile);
+				}
+
+				char *ptr = &number;
+				while (*ptr != '\0')
+				{
+					inumber *= 10;
+					inumber += *ptr - '0';
+					ptr++;
+				}
+				graph[i][j] = inumber;
+				printf("{%d,%d} NUMBER->%d\n", i, j, graph[i][j]);
+				memset(number, '\0', sizeof(number));
+				inumber = 0;
+				
+				j++;
+				if (j > COLS - 1)
+				{
+					i++;
+					j = 0;
+				}
+				
+			}
+		}
+		
+		fcloseall();
+		Dijkstra(graph);
+	}
+	else
+	{
+		fprintf(stderr, "Can't open graph file\n");
+		return -1;
+	}
+
 	return 0;
 }
