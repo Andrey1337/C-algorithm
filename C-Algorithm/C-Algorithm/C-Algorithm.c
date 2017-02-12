@@ -79,8 +79,7 @@ int main(int argc, char *argv[])
 		char number[10];
 		int inumber = 0;
 
-		int i = 0;
-		int j = 0;
+		int i = 0, j = 0;
 
 		memset(number, '\0', sizeof(number));
 		int graph[ROWS][COLS];
@@ -106,17 +105,17 @@ int main(int argc, char *argv[])
 				printf("{%d,%d} NUMBER->%d\n", i, j, graph[i][j]);
 				memset(number, '\0', sizeof(number));
 				inumber = 0;
-				
+
 				j++;
 				if (j > COLS - 1)
 				{
 					i++;
 					j = 0;
 				}
-				
+
 			}
 		}
-		
+
 		fcloseall();
 		Dijkstra(graph);
 	}
